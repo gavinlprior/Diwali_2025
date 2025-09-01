@@ -42,7 +42,9 @@ header nav a img {
 
 .language-toggle {
     display: flex;
-    align-items: center;
+    /*align-items: center; */
+    flex-direction: column; /* Stack the buttons vertically */
+    align-items: flex-start; /* Align the buttons to the left */
     gap: 5px; /* Spacing between the language buttons */
 }
 
@@ -72,7 +74,7 @@ header nav a img {
     max-height: calc(100vh - 40px);
     width: 100%;
     max-width: 380px;
-    margin-top: 80px;
+    margin-top: 120px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     flex-shrink: 0;
