@@ -44,7 +44,7 @@ header nav a img {
     display: flex;
     /*align-items: center; */
     flex-direction: column; /* Stack the buttons vertically */
-    align-items: flex-start; /* Align the buttons to the left */
+    align-items: flex-end; /* Align the buttons to the left */
     gap: 5px; /* Spacing between the language buttons */
 }
 
