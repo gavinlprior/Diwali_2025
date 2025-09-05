@@ -40,6 +40,22 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     };
 
+    let isPlaying = false;
+
+    // Language button click handler
+    langButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            // Block language changes while a sound is playing
+            if (!isPlaying) {
+                langButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const selectedLang = button.dataset.lang;
+                updateLanguage(selectedLang);
+            }
+        });
+    });
+
     function updateLanguage(lang) {
         soundButtons.forEach(button => {
             const audioId = button.dataset.audio;
@@ -61,42 +77,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    let isPlaying = false;
-
-    // Language button click handler
-    langButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            event.preventDefault();
-            // Block language changes while a sound is playing
-            if (!isPlaying) {
-                langButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                const selectedLang = button.dataset.lang;
-                updateLanguage(selectedLang);
-            }
-        });
-    });
-
     // Sound button click handler
     soundButtons.forEach(button => {
         button.addEventListener('click', (event) => {
             event.preventDefault();
-            if (!isPlaying) {
+            const audioId = button.dataset.audio;
+            const audioElement = document.getElementById(audioId);
+            
+            // Check if audio is already playing
+            if (isPlaying) {
+                // If this is the button currently playing, stop it
+                if (button.classList.contains('playing')) {
+                    audioElement.pause();
+                    audioElement.currentTime = 0;
+                    isPlaying = false;
+                    button.classList.remove('pressed', 'highlight', 'playing');
+                    document.body.classList.remove('audio-playing');
+                }
+            } else {
+                // If no audio is playing, start this one
                 isPlaying = true;
-                const audioId = button.dataset.audio;
-                const audioElement = document.getElementById(audioId);
-
-                button.classList.add('pressed');
-                button.classList.add('highlight');
-
+                document.body.classList.add('audio-playing');
+                
+                button.classList.add('pressed', 'highlight', 'playing');
                 audioElement.play();
 
                 audioElement.addEventListener('ended', () => {
-                    button.classList.remove('pressed');
-                    button.classList.remove('highlight');
+                    button.classList.remove('pressed', 'highlight', 'playing');
                     isPlaying = false;
-                });
-
+                    document.body.classList.remove('audio-playing');
+                }, { once: true });
             }
         });
     });
