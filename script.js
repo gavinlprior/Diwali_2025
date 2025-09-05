@@ -1,57 +1,108 @@
 document.addEventListener('DOMContentLoaded', () => {
     const soundButtons = document.querySelectorAll('.sound-button');
     const langButtons = document.querySelectorAll('.lang-button');
+    const headerLinks = document.querySelectorAll('header a');
     const languages = {
         'en': {
             'audio01': 'Lord Ram',
             'audio02': 'Mata Sita',
             'audio03': 'Hanumanji',
-            'audio04': 'Jatayu',
+            'audio04': 'Ganeshji',
             'audio05': 'Laxmiji',
             'audio06': 'Ravana',
-            'audio07': 'Lakshmana',
+            'audio07': 'Garud Ji',
             'audio08': 'Harminder',
-            'audio09': 'Diya',
+            'audio09': 'Big Diva',
             'fullStory': 'The Story of Diwali',
         },
         'hi': {
             'audio01': 'राम',
             'audio02': 'मा सीता',
             'audio03': 'हनुमानजी',
-            'audio04': 'जटायु',
+            'audio04': 'गणेशजी',
             'audio05': 'लक्ष्मीजी',
             'audio06': 'रावण',
-            'audio07': 'लक्ष्मण',
+            'audio07': 'गरुड़ जी',
             'audio08': 'हरमिंदर',
-            'audio09': 'दीया',
+            'audio09': 'बिग दिवा',
             'fullStory': 'दीपावली की कहानी',
         },
         'guj': {
             'audio01': 'Lord Ram',
             'audio02': 'Mata Sita',
             'audio03': 'Hanumanji',
-            'audio04': 'Jatayu',
+            'audio04': 'Ganeshji',
             'audio05': 'Laxmiji',
             'audio06': 'Ravana',
-            'audio07': 'Lakshmana',
+            'audio07': 'Garud Ji',
             'audio08': 'Harminder',
-            'audio09': 'Diya',
+            'audio09': 'Big Diva',
             'fullStory': 'The Story of Diwali',
         },
     };
 
-    let isPlaying = false;
+    let currentlyPlayingAudio = null;
+
+    function stopCurrentAudio() {
+        if (currentlyPlayingAudio) {
+            currentlyPlayingAudio.pause();
+            currentlyPlayingAudio.currentTime = 0;
+            const playingButton = document.querySelector('.sound-button.playing');
+            if (playingButton) {
+                playingButton.classList.remove('playing', 'pressed', 'highlight');
+            }
+            currentlyPlayingAudio = null;
+            document.body.classList.remove('audio-playing');
+        }
+    }
 
     // Language button click handler
     langButtons.forEach(button => {
         button.addEventListener('click', (event) => {
             event.preventDefault();
             // Block language changes while a sound is playing
-            if (!isPlaying) {
+            if (!currentlyPlayingAudio) {
                 langButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
                 const selectedLang = button.dataset.lang;
                 updateLanguage(selectedLang);
+            }
+        });
+    });
+
+    // Handle all header links
+    headerLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            stopCurrentAudio();
+        });
+    });
+
+    // Sound button click handler
+    soundButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            const audioId = button.dataset.audio;
+            const audioElement = document.getElementById(audioId);
+
+            // If the same audio is playing, stop it
+            if (currentlyPlayingAudio === audioElement) {
+                stopCurrentAudio();
+            } else {
+                // If another audio is playing, stop it first
+                stopCurrentAudio();
+                
+                // Start the new audio
+                currentlyPlayingAudio = audioElement;
+                audioElement.play();
+
+                // Add classes to the current button
+                button.classList.add('playing', 'pressed', 'highlight');
+                document.body.classList.add('audio-playing');
+                
+                // Event listener to reset classes when audio ends
+                audioElement.addEventListener('ended', () => {
+                    stopCurrentAudio();
+                }, { once: true });
             }
         });
     });
@@ -76,40 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
-    // Sound button click handler
-    soundButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            event.preventDefault();
-            const audioId = button.dataset.audio;
-            const audioElement = document.getElementById(audioId);
-            
-            // Check if audio is already playing
-            if (isPlaying) {
-                // If this is the button currently playing, stop it
-                if (button.classList.contains('playing')) {
-                    audioElement.pause();
-                    audioElement.currentTime = 0;
-                    isPlaying = false;
-                    button.classList.remove('pressed', 'highlight', 'playing');
-                    document.body.classList.remove('audio-playing');
-                }
-            } else {
-                // If no audio is playing, start this one
-                isPlaying = true;
-                document.body.classList.add('audio-playing');
-                
-                button.classList.add('pressed', 'highlight', 'playing');
-                audioElement.play();
-
-                audioElement.addEventListener('ended', () => {
-                    button.classList.remove('pressed', 'highlight', 'playing');
-                    isPlaying = false;
-                    document.body.classList.remove('audio-playing');
-                }, { once: true });
-            }
-        });
-    });
 
     updateLanguage('en');
 });
