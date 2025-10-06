@@ -5,11 +5,11 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-color: #564D85;
+    background-color: #5B518C;
 }
 
 header {
-    background-image: linear-gradient(to top, #564D85, #B05896);
+    background-image: linear-gradient(to top, #5B518C, #B05896);
     color: #333;
     padding: 10px 20px;
     width: 100%;
@@ -195,19 +195,39 @@ body.audio-playing .sound-button:not(.playing) {
     opacity: 0.5; /* Visually indicate that the buttons are disabled */
 }
 
+/* Styling for the Footer and Logo Grid */
 footer {
     width: 100%;
-    padding: 10px;
-    background-color: #564D85;
-    text-align: center;
-    margin-top: 15px; /* Add some space between the buttons and the footer */
-    box-sizing: border-box;
+    padding: 20px 0;
+    background-image: linear-gradient(to bottom, #5B518C 90%, #B05896);
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0; /* Prevents the footer from shrinking */
 }
 
-footer img {
-    height: 20px; /* Adjust the image size as needed */
+.footer-logos {
+    display: grid;
+    /* This creates the single column grid you requested: one logo under the other */
+    grid-template-columns: 1fr; 
+    gap: 15px; /* Space between logos */
+    padding: 0 10px;
+    max-width: 300px; /* Constrain the width for a tidy look on narrow screens */
+}
+
+.footer-logos a {
+    display: block; /* Ensures each link takes up a full row */
+    text-align: center;
+}
+
+.footer-logos img {
+    /* Rules to handle odd shapes */
     max-width: 100%;
+    max-height: 80px; /* Limits the vertical size of any logo */
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Ensures the whole logo is visible without cropping */
+    padding: 5px; /* Slight padding inside the container */
+    border-radius: 5px;
+    //background-color: rgba(255, 255, 255, 0.9); /* Light background to help odd-shaped logos stand out */
 }

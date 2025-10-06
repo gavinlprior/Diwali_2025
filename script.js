@@ -4,15 +4,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const headerLinks = document.querySelectorAll('header a');
     const languages = {
         'en': {
-            'audio01': 'Lord Ram',
-            'audio02': 'Mata Sita',
-            'audio03': 'Hanumanji',
-            'audio04': 'Jatayu',
-            'audio05': 'Laxmiji',
-            'audio06': 'Ravana',
-            'audio07': 'Laxman',
-            'audio08': 'Harminder',
-            'audio09': 'Diya',
+            'audio01': 'Lord Ram', //Seventh incarnation of the god Vishnu
+            'audio02': 'Mata Sita', // Wife of God Rama
+            'audio03': 'Hanumanji', //Monkey God
+            'audio04': 'Jatayu', //Demigod.  Devine Eagle and son of Aruna
+            'audio05': 'Laxmiji', //Goddess of wealth, prosperity, and fortune
+            'audio06': 'Ravana', //Ten-headed rakshasa king of Lanka
+            'audio07': 'Ganesha', //Elephant-headed Hindu god of new beginnings, wisdom, and intellect
+            'audio08': 'Harminder', //
+            'audio09': 'Diya', //Represents the triumph of light over dark, good over evi
             'fullStory': 'The Story of Diwali',
         },
         'hi': {
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'audio04': 'जटायु',
             'audio05': 'लक्ष्मीजी',
             'audio06': 'रावण',
-            'audio07': 'लक्ष्मण',
+            'audio07': 'गणेशजी',
             'audio08': 'हरमिंदर',
             'audio09': 'दीया',
             'fullStory': 'दिवाली की कहानी',
@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'audio04': 'જટાયુ',
             'audio05': 'લક્ષ્મીજી',
             'audio06': 'રાવણ',
-            'audio07': 'લક્ષ્મણ',
-            'audio08': 'Harminder',
+            'audio07': 'ગણેશજી',
+            'audio08': 'હરમિન્દર',
             'audio09': 'દીવો',
             'fullStory': 'દિવાળીની વાર્તા',
         },
